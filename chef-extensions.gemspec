@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.version     = Chef::Extensions::VERSION
   s.authors     = ["Gerhard Lazu"]
   s.email       = ["gerhard@lazu.co.uk"]
-  s.homepage    = ""
+  s.homepage    = "http://gchef.github.com/chef-extensions"
   s.summary     = %q{Chef extensions, can be used stand-alone}
   s.description = %q{Commands useful for checking internet connectivity, VM presence etc.}
 
