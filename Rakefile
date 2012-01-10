@@ -1,5 +1,6 @@
 require 'bundler/gem_tasks'
 require 'rake/clean'
+require 'rdiscount'
 require 'rocco/tasks'
 Rocco::make 'docs/'
 
