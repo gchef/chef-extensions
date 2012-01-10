@@ -22,6 +22,13 @@ end
 task :docs => 'docs/index.html'
 CLEAN.include 'docs/index.html'
 
+# Update the pages/ directory clone
+file 'docs/.git' => ['docs/', '.git/refs/heads/gh-pages'] do |f|
+  sh "cd docs && git init -q && git remote add o ../.git" if !File.exist?(f.name)
+  sh "cd docs && git fetch -q o && git reset -q --hard o/gh-pages && touch ."
+end
+CLOBBER.include 'docs/.git'
+
 # GITHUB PAGES ===============================================================
 
 desc 'Update gh-pages branch'
@@ -37,10 +44,3 @@ task :pages => ['docs/.git', :docs] do
     end
   end
 end
-
-# Update the pages/ directory clone
-file 'docs/.git' => ['docs/', '.git/refs/heads/gh-pages'] do |f|
-  sh "cd docs && git init -q && git remote add o ../.git" if !File.exist?(f.name)
-  sh "cd docs && git fetch -q o && git reset -q --hard o/gh-pages && touch ."
-end
-CLOBBER.include 'docs/.git'
