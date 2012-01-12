@@ -1,7 +1,7 @@
 require 'chef-extensions/version'
 require 'securerandom'
 
-module Chef
+class Chef
   module Extensions
     extend self
 
