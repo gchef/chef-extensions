@@ -21,4 +21,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency "rdiscount"
   s.add_development_dependency "rocco"
   s.add_development_dependency "guard-rocco"
+  s.add_development_dependency "chef"
 end

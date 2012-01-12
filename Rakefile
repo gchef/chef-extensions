@@ -4,6 +4,11 @@ require 'rdiscount'
 require 'rocco/tasks'
 Rocco::make 'docs/'
 
+task :version do
+  require 'chef'
+  puts Chef::Extensions::VERSION
+end
+
 desc 'Build rocco docs'
 task :docs => :rocco
 directory 'docs/'
