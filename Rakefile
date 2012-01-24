@@ -1,8 +1,17 @@
 require 'bundler/gem_tasks'
+
 require 'rake/clean'
+require 'rake/testtask'
+
 require 'rdiscount'
 require 'rocco/tasks'
 Rocco::make 'docs/'
+
+Rake::TestTask.new do |t|
+  t.pattern = 'test/**/*_test.rb'
+end
+
+task :default => [:test]
 
 task :version do
   require 'chef'
