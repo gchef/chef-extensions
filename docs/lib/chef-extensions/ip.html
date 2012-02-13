@@ -15,6 +15,7 @@
           <a class="source" href="../chef-extensions.html">chef-extensions.rb</a>
           <a class="source" href="ec2.html">ec2.rb</a>
           <a class="source" href="ip.html">ip.rb</a>
+          <a class="source" href="platform.html">platform.rb</a>
           <a class="source" href="version.html">version.rb</a>
       </div>
     </div>
@@ -33,31 +34,67 @@
           <a class="pilcrow" href="#section-1">&#182;</a>
         </div>
         
-
       </td>
       <td class=code>
-        <div class='highlight'><pre><span class="nb">require</span> <span class="s1">&#39;socket&#39;</span>
+        <div class='highlight'><pre><span class="nb">require</span> <span class="no">File</span><span class="o">.</span><span class="n">expand_path</span><span class="p">(</span><span class="s1">&#39;../platform&#39;</span><span class="p">,</span> <span class="bp">__FILE__</span><span class="p">)</span>
 
 <span class="k">class</span> <span class="nc">Chef</span>
   <span class="k">module</span> <span class="nn">Extensions</span>
     <span class="k">module</span> <span class="nn">IP</span>
-      <span class="kp">extend</span> <span class="nb">self</span>
+      <span class="kp">extend</span> <span class="nb">self</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-2'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-2">&#182;</a>
+        </div>
+        <p><strong>Get all local IPv4 addresses</strong> <br />
+It excludes localhost. Easily adaptable to IPv6.
+In Ruby 1.9, this is a simple call to <code>Socket.ip_address_list</code>.</p>
 
-      <span class="k">def</span> <span class="nf">all</span>
-        <span class="vi">@all</span> <span class="o">||=</span> <span class="no">Socket</span><span class="o">.</span><span class="n">ip_address_list</span>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>      <span class="k">def</span> <span class="nf">all</span>
+        <span class="n">local_ips</span> <span class="o">-</span> <span class="n">localhost</span>
       <span class="k">end</span>
 
-      <span class="k">def</span> <span class="nf">ipv4</span>
-        <span class="n">all</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="o">&amp;</span><span class="ss">:ipv4?</span><span class="p">)</span>
-      <span class="k">end</span>
+      <span class="kp">protected</span>
 
-      <span class="k">def</span> <span class="nf">ipv6</span>
-        <span class="n">all</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="o">&amp;</span><span class="ss">:ipv6?</span><span class="p">)</span>
-      <span class="k">end</span>
+        <span class="k">def</span> <span class="nf">local_ips</span>
+          <span class="sb">`echo &quot;</span><span class="si">#{</span><span class="n">ifconfig</span><span class="si">}</span><span class="sb">&quot; | </span><span class="si">#{</span><span class="n">filter</span><span class="si">}</span><span class="sb">`</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">end</span>
 
-      <span class="k">def</span> <span class="nf">addresses</span><span class="p">(</span><span class="nb">type</span><span class="p">)</span>
-        <span class="nb">self</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="nb">type</span><span class="p">)</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="o">&amp;</span><span class="ss">:ip_address</span><span class="p">)</span>
-      <span class="k">end</span>
+        <span class="k">def</span> <span class="nf">localhost</span>
+          <span class="o">[</span><span class="s2">&quot;127.0.0.1&quot;</span><span class="o">]</span>
+        <span class="k">end</span>
+
+        <span class="k">def</span> <span class="nf">ifconfig</span>
+          <span class="vi">@ifconfig</span> <span class="o">||=</span> <span class="sb">`ifconfig`</span>
+        <span class="k">end</span>
+
+        <span class="k">def</span> <span class="nf">filter</span>
+          <span class="vi">@filter</span> <span class="o">||=</span> <span class="k">if</span> <span class="no">Platform</span><span class="o">.</span><span class="n">linux?</span>
+            <span class="n">linux_filter</span>
+          <span class="k">elsif</span> <span class="no">Platform</span><span class="o">.</span><span class="n">os_x?</span>
+            <span class="n">os_x_filter</span>
+          <span class="k">else</span>
+            <span class="k">raise</span> <span class="s2">&quot;Only works on Linux or OS X&quot;</span>
+          <span class="k">end</span>
+        <span class="k">end</span>
+
+        <span class="k">def</span> <span class="nf">linux_filter</span>
+          <span class="s2">&quot;</span><span class="si">#{</span><span class="n">awk</span><span class="si">}</span><span class="s2"> { print $4 }&#39;&quot;</span>
+        <span class="k">end</span>
+
+        <span class="k">def</span> <span class="nf">os_x_filter</span>
+          <span class="s2">&quot;</span><span class="si">#{</span><span class="n">awk</span><span class="si">}</span><span class="s2"> { print $2 }&#39;&quot;</span>
+        <span class="k">end</span>
+
+        <span class="k">def</span> <span class="nf">awk</span>
+          <span class="sx">%{awk -F&quot;[: ]+&quot; &#39;/inet /}</span>
+        <span class="k">end</span>
+
     <span class="k">end</span>
   <span class="k">end</span>
 <span class="k">end</span></pre></div>

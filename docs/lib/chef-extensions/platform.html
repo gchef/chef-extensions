@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta http-equiv="content-type" content="text/html;charset=utf-8">
-  <title>version.rb</title>
+  <title>platform.rb</title>
   <link rel="stylesheet" href="http://jashkenas.github.com/docco/resources/docco.css">
 </head>
 <body>
@@ -23,7 +23,7 @@
   <table cellspacing=0 cellpadding=0>
   <thead>
     <tr>
-      <th class=docs><h1>version.rb</h1></th>
+      <th class=docs><h1>platform.rb</h1></th>
       <th class=code></th>
     </tr>
   </thead>
@@ -39,7 +39,17 @@
       <td class=code>
         <div class='highlight'><pre><span class="k">class</span> <span class="nc">Chef</span>
   <span class="k">module</span> <span class="nn">Extensions</span>
-    <span class="no">VERSION</span> <span class="o">=</span> <span class="s2">&quot;0.2.1&quot;</span>
+    <span class="k">module</span> <span class="nn">Platform</span>
+      <span class="kp">extend</span> <span class="nb">self</span>
+
+      <span class="k">def</span> <span class="nf">os_x?</span>
+        <span class="no">RUBY_PLATFORM</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s1">&#39;darwin&#39;</span><span class="p">)</span>
+      <span class="k">end</span>
+
+      <span class="k">def</span> <span class="nf">linux?</span>
+        <span class="no">RUBY_PLATFORM</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s1">&#39;linux&#39;</span><span class="p">)</span>
+      <span class="k">end</span>
+    <span class="k">end</span>
   <span class="k">end</span>
 <span class="k">end</span></pre></div>
       </td>
