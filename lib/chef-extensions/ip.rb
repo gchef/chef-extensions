@@ -6,7 +6,7 @@ class Chef
       extend self
 
       # **Get all local IPv4 addresses** <br />
-      # It excludes localhost. Easily adaptable to IPv6.
+      # It excludes localhost. Easily adaptable to IPv6. <br />
       # In Ruby 1.9, this is a simple call to `Socket.ip_address_list`.
       def all
         local_ips - localhost
