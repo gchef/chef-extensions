@@ -13,10 +13,9 @@ end
 
 task :default => [:test]
 
-task :version do
-  require 'chef'
-  puts Chef::Extensions::VERSION
-end
+
+
+### DOCUMENTATION
 
 desc 'Build rocco gh-pages'
 task :docs => :rocco do
