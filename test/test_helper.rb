@@ -2,19 +2,8 @@ require 'rubygems'
 require 'bundler'
 Bundler.setup
 
-require 'minitest/unit'
-require 'minitest/spec'
-
-require 'turn/colorize'
-require 'turn/controller'
-require 'turn/runners/minirunner'
-
-Turn.config do |config|
-  config.format = :pretty
-end
-
-MiniTest::Unit.runner = Turn::MiniRunner.new
-MiniTest::Unit.autorun
+require 'turn/autorun'
+Turn.config.format = :pretty
 
 require 'pry'
 
