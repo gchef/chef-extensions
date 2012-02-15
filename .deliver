@@ -1,2 +1,2 @@
 APP="chef-extensions docs"
-STRATEGY="docs-github-pages"
+STRATEGY="gh-pages"
