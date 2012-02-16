@@ -1,7 +1,8 @@
+require 'securerandom'
+
 require 'chef-extensions/version'
 require 'chef-extensions/ec2'
 require 'chef-extensions/ip'
-require 'securerandom'
 
 class Chef
   module Extensions

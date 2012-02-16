@@ -11,7 +11,7 @@ class Chef
       # **Get all public IPv4 addresses** <br />
       # Some of them might be local to the host, but it's not easy to say which
       # is which without expensive queries and a complicated logic. <br />
-      # It excludes localhost.
+      # This method excludes localhost.
       def public_ipv4
         local_ipv4 - localhost_ipv4
       end
@@ -27,7 +27,7 @@ class Chef
       end
 
       # **Runs ifconfig shell utility** <br />
-      # Caching was not necessary, but it helps with tests.
+      # Caching was not necessary, but it helps when testing.
       def ifconfig
         @ifconfig ||= `ifconfig`
       end
@@ -45,7 +45,7 @@ class Chef
           end
         end
 
-        # Linux's ifconfig returns a slightly different version that OS X
+        # Linux's ifconfig returns a slightly different version than OS X's.
         def linux_filter
           "#{awk} { print $4 }'"
         end
