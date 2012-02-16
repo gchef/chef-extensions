@@ -10,8 +10,19 @@ class Chef
           IP.instance_variable_set(:@ifconfig, ifconfig)
         end
 
-        it "all IPv4 addresses, excluding localhost" do
-          IP.all.must_equal([
+        it "all public IPv4 addresses (excludes localhost)" do
+          IP.public_ipv4.must_equal([
+            "10.100.1.11",
+            "10.100.1.10",
+            "192.168.86.1",
+            "192.168.203.1",
+            "11.11.11.1"
+          ])
+        end
+
+        it "all local IPv4 addresses (includes localhost)" do
+          IP.local_ipv4.must_equal([
+            "127.0.0.1",
             "10.100.1.11",
             "10.100.1.10",
             "192.168.86.1",
@@ -28,10 +39,18 @@ class Chef
           IP.instance_variable_set(:@filter, IP.send(:linux_filter))
         end
 
-        it "all IPv4 addresses, excluding localhost" do
-          IP.all.must_equal([
+        it "all public IPv4 addresses (excludes localhost)" do
+          IP.public_ipv4.must_equal([
             "10.0.1.10",
             "11.11.11.10"
+          ])
+        end
+
+        it "all local IPv4 addresses (includes localhost)" do
+          IP.local_ipv4.must_equal([
+            "10.0.1.10",
+            "11.11.11.10",
+            "127.0.0.1"
           ])
         end
       end
