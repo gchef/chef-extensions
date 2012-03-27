@@ -2,8 +2,7 @@ require 'rubygems'
 require 'bundler'
 Bundler.setup
 
-require 'turn/autorun'
-Turn.config.format = :pretty
+require 'minitest/autorun'
 
 require 'pry'
 
