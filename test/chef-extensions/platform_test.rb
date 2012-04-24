@@ -13,8 +13,16 @@ class Chef
           Platform.amd64?.must_equal false
         end
 
+        it "x86_64?" do
+          Platform.x86_64?.must_equal false
+        end
+
         it "i386?" do
           Platform.i386?.must_equal true
+        end
+
+        it "i686?" do
+          Platform.i686?.must_equal true
         end
 
         it "arch" do
@@ -31,8 +39,16 @@ class Chef
           Platform.amd64?.must_equal true
         end
 
+        it "x86_64?" do
+          Platform.x86_64?.must_equal true
+        end
+
         it "i386?" do
           Platform.i386?.must_equal false
+        end
+
+        it "i686?" do
+          Platform.i686?.must_equal false
         end
 
         it "arch" do

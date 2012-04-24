@@ -17,20 +17,22 @@ class Chef
 
       # Returns true if architecture is 64bit!
       #
-      def amd64?
+      def x86_64?
         !! architecture.index("x86_64")
       end
+      alias :amd64? :x86_64?
 
       # Returns true if architecture is 32bit!
       #
-      def i386?
-        ! amd64?
+      def i686?
+        ! x86_64?
       end
+      alias :i386? :i686?
 
       # Package friendly architecture string
       #
       def arch
-        amd64? ? "amd64" : "i386"
+        x86_64? ? "amd64" : "i386"
       end
 
       # Retrieves and caches the architecture type

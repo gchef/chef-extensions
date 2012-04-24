@@ -9,7 +9,7 @@ class Chef
     extend self
 
     # **Ping Google's DNS.** <br />
-    # If it doesn't hear back within 1s, it's safe to
+    # If it doesn't hear back within 2s, it's safe to
     # assume that we don't have internet connectivity
     def wan_up?
       `ping -c 1 8.8.8.8 -W 2`.include? "1 received"
@@ -23,7 +23,7 @@ class Chef
     end
 
     # **Check if this instance ID is a valid one.** <br />
-    # If it  starts with 'i-', it's safe to assume that we're running within
+    # If it contains 'i-', it's safe to assume that we're running within
     # the context of an EC2 instance.
     def ec2?
       @ec2 ||= EC2.instance_id.include?('i-')
