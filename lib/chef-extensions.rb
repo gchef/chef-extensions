@@ -9,10 +9,10 @@ class Chef
     extend self
 
     # **Ping Google's DNS.** <br />
-    # If it doesn't hear back within 2s, it's safe to
+    # If it doesn't hear back within 1s, it's safe to
     # assume that we don't have internet connectivity
     def wan_up?
-      `ping -c 1 8.8.8.8 -W 2`.include? "1 received"
+      `ping -c 1 8.8.8.8 -W 1`.include? "1 received"
     end
 
     # **Checks if vagrant user exists.** <br />
