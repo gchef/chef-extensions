@@ -2,8 +2,11 @@ require 'rubygems'
 require 'bundler'
 Bundler.setup
 
-require 'minitest/autorun'
+begin
+  require 'pry'
+rescue LoadError
+end
 
-require 'pry'
+require 'turn/autorun'
 
 $:.push File.expand_path("../../lib", __FILE__)

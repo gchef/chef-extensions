@@ -20,7 +20,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'chef'
   s.add_development_dependency 'guard-minitest'
   s.add_development_dependency 'minitest'
-  s.add_development_dependency 'pry'
-  s.add_development_dependency 'rdiscount'
-  s.add_development_dependency "rocco"
+  s.add_development_dependency 'turn'
 end
