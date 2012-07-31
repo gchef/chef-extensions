@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
-GH_PAGES_EXEC="bundle exec rake docs"
+GENERATE_CMD="bundle exec rake docs"
 STRATEGY="gh-pages"
